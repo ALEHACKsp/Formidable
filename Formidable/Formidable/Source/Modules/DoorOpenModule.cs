@@ -21,22 +21,6 @@ namespace Formidable.Modules
 
         }
 
-        private static void SetDoorAngle(Door door, float value)
-        {
-            if (door == null)
-                throw new ArgumentNullException(nameof(door));
-
-            FieldInfo fieldInfo = door.GetType().GetField("_currentAngle", (BindingFlags.Instance | BindingFlags.NonPublic));
-
-            if (fieldInfo == null)
-                throw new InvalidOperationException();
-
-            fieldInfo.SetValue(door, value);
-
-            if (door.transform.parent != null)
-                door.transform.rotation = door.GetDoorRotation(value) * door.transform.parent.rotation;
-        }
-
         public override void Toggle()
         {
             foreach (Door door in GameObject.FindObjectsOfType<Door>())
@@ -45,9 +29,14 @@ namespace Formidable.Modules
                     continue;
 
                 door.enabled = true;
-                door.DoorState = EDoorState.Open;
+                door.DoorState = EDoorState.Shut;
 
-                SetDoorAngle(door, door.GetAngle(door.DoorState));
+                MethodInfo methodInfo = door.GetType().BaseType.GetMethod("Open", (BindingFlags.Instance | BindingFlags.NonPublic));
+
+                if (methodInfo == null)
+                    continue;
+
+                methodInfo.Invoke(door, null);
             }
         }
 
