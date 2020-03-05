@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Comfort.Common;
+using EFT;
 using EFT.Interactive;
 using UnityEngine;
 
@@ -31,12 +33,22 @@ namespace Formidable.Modules
                 door.enabled = true;
                 door.DoorState = EDoorState.Shut;
 
-                MethodInfo methodInfo = door.GetType().BaseType.GetMethod("Open", (BindingFlags.Instance | BindingFlags.NonPublic));
+                if (Singleton<GameWorld>.Instance != null)
+                {
+                    MethodInfo isLocalGameMethodInfo = Singleton<GameWorld>.Instance.GetType().GetMethod("IsLocalGame", (BindingFlags.Instance | BindingFlags.NonPublic));
 
-                if (methodInfo == null)
-                    continue;
+                    bool isLocalGameReturnValue = ((bool) isLocalGameMethodInfo.Invoke(Singleton<GameWorld>.Instance, null));
 
-                methodInfo.Invoke(door, null);
+                    if (isLocalGameReturnValue)
+                    {
+                        MethodInfo methodInfo = door.GetType().BaseType.GetMethod("Open", (BindingFlags.Instance | BindingFlags.NonPublic));
+
+                        if (methodInfo == null)
+                            continue;
+
+                        methodInfo.Invoke(door, null);
+                    }
+                }
             }
         }
 
