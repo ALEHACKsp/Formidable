@@ -41,6 +41,7 @@ namespace Formidable
         private PlayerBoxModule playerBoxModule;
         private PlayerLabelModule playerLabelModule;
         private LootItemLabelModule lootItemLabelModule;
+        private DoorOpenModule doorOpenModule;
 
         private Shader shader;
         private float nextShaderUpdateTime;
@@ -55,6 +56,7 @@ namespace Formidable
             this.playerBoxModule = new PlayerBoxModule(this.moduleInformation);
             this.playerLabelModule = new PlayerLabelModule(this.moduleInformation);
             this.lootItemLabelModule = new LootItemLabelModule(this.moduleInformation);
+            this.doorOpenModule = new DoorOpenModule(this.moduleInformation);
             this.shader = null;
             this.nextShaderUpdateTime = 0f;
         }
@@ -77,6 +79,7 @@ namespace Formidable
             ModuleManager.AddModule(PlayerBoxModule._KeyCode, this.playerBoxModule);
             ModuleManager.AddModule(PlayerLabelModule._KeyCode, this.playerLabelModule);
             ModuleManager.AddModule(LootItemLabelModule._KeyCode, this.lootItemLabelModule);
+            ModuleManager.AddModule(DoorOpenModule._KeyCode, this.doorOpenModule);
         }
 
         public void Update()

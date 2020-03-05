@@ -75,6 +75,7 @@
     <Compile Include="Source\FormidableBehaviour.cs" />
     <Compile Include="Source\FormidableProgram.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Source\Modules\DoorOpenModule.cs" />
     <Compile Include="Source\Modules\LootItemLabelModule.cs" />
     <Compile Include="Source\Modules\LootItemLabelState.cs" />
     <Compile Include="Source\Modules\Module.cs" />

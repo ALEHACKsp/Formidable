@@ -9,6 +9,7 @@ using UnityEngine;
 using Formidable.Data;
 using Formidable.Drawing;
 using Formidable.Game;
+using Formidable.Util;
 
 namespace Formidable.Modules
 {
@@ -56,7 +57,7 @@ namespace Formidable.Modules
 
             foreach (GameLootItem gameLootItem in base.moduleInformation.GameLootItems)
             {
-                if (!gameLootItem.IsOnScreen || (gameLootItem.Distance > _renderDistance))
+                if (!GameUtil.IsLootItemValid(gameLootItem.LootItem) || !gameLootItem.IsOnScreen || (gameLootItem.Distance > _renderDistance))
                     continue;
 
                 bool isSpecialLootItem = SpecialLootItemManager.IsSpecialLootItem(gameLootItem.LootItem);
